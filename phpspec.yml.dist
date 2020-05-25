@@ -1,0 +1,4 @@
+suites:
+    ckrack:
+        namespace: Ckrack\OptimusBundle
+        psr4_prefix: Ckrack\OptimusBundle
