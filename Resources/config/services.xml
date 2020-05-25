@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="optimus"
+                 class="Jenssegers\Optimus\Optimus"
+                 public="true"
+        >
+            <argument>%optimus.prime%</argument>
+            <argument>%optimus.inverse%</argument>
+            <argument>%optimus.random%</argument>
+        </service>
+
+        <service id="optimus.converter"
+                 class="Ckrack\OptimusBundle\ParamConverter\OptimusParamConverter"
+        >
+            <argument type="service" id="optimus"/>
+            <argument>%optimus.passthrough%</argument>
+            <tag name="request.param_converter" priority="1" converter="optimus.converter" />
+        </service>
+
+        <service id="optimus.twig.extension" class="Ckrack\OptimusBundle\Twig\OptimusExtension">
+            <argument type="service" id="optimus" />
+            <tag name="twig.extension" />
+        </service>
+    </services>
+</container>

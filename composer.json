@@ -1,0 +1,51 @@
+{
+  "name": "ckrack/optimus-bundle",
+  "description": "Integrate Optimus in a Symfony project",
+  "type": "symfony-bundle",
+  "keywords": ["optimus", "identifier", "paramconverter", "param", "converter", "symfony", "bundle", "jenssegers", "twig", "twigfilter"],
+  "homepage": "https://github.com/ckrack/optimus-bundle",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Clemens Krack",
+      "email": "info@clemenskrack.com"
+  }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Ckrack\\OptimusBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "spec\\Ckrack\\OptimusBundle\\": "spec/"
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+    "jenssegers/optimus": "^1.1",
+    "sensio/framework-extra-bundle": "^5.1",
+    "symfony/http-kernel": "^4.0 || ^5.0"
+  },
+  "require-dev": {
+    "bossa/phpspec2-expect": "^3.0",
+    "phpspec/phpspec": "^6.1",
+    "roave/security-advisories": "dev-master",
+    "twig/twig": "^2.7"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.1-dev"
+    }
+  },
+  "suggest": {
+    "twig/twig": "Allows to use optimus in Twig template engine"
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  }
+}
