@@ -4,7 +4,6 @@
   "type": "symfony-bundle",
   "keywords": ["optimus", "identifier", "paramconverter", "param", "converter", "symfony", "bundle", "jenssegers", "twig", "twigfilter"],
   "homepage": "https://github.com/ckrack/optimus-bundle",
-  "version": "0.1.0",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
