@@ -43,6 +43,8 @@ class OptimusParamConverter implements ParamConverterInterface
 
     private function setOptimus(Request $request, ParamConverter $configuration): void
     {
+        $name = $configuration->getName();
+
         $identifier = $this->getIdentifier(
             $request,
             array_replace(['optimus' => null], $configuration->getOptions()),
@@ -53,9 +55,13 @@ class OptimusParamConverter implements ParamConverterInterface
             return;
         }
 
+        if ($name == null && $identifier == 'optimus') {
+            $name = 'optimus';
+        }
+
         try {
             $optimus = $this->optimus->decode((int) $request->attributes->get($identifier));
-            $request->attributes->set($identifier, $optimus);
+            $request->attributes->set($name, $optimus);
         } catch (\Throwable $th) {
             return;
         }

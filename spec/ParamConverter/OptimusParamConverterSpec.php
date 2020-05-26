@@ -41,14 +41,24 @@ class OptimusParamConverterSpec extends ObjectBehavior
         expect($request->attributes->get('optimus'))->toBe(20);
     }
 
-    public function it_decodes_when_optimus_is_named_in_ParamConverter_options()
+    public function it_decodes_when_optimus_is_named_differently_in_ParamConverter_options()
     {
-        $request = new Request([], [], ['controllerArgument' => '1795633817']);
-        $configuration = new ParamConverter(['options' => ['optimus' => 'controllerArgument']]);
+        $request = new Request([], [], ['id' => '1795633817']);
+        $configuration = new ParamConverter(['name' => 'controllerArgument', 'options' => ['optimus' => 'id']]);
 
         $this->supports($configuration)->shouldReturn(true);
         $this->apply($request, $configuration)->shouldReturn(true);
         expect($request->attributes->get('controllerArgument'))->toBe(20);
+    }
+
+    public function it_decodes_when_optimus_is_named_in_ParamConverter_options()
+    {
+        $request = new Request([], [], ['id' => '1795633817']);
+        $configuration = new ParamConverter(['name' => 'id', 'options' => ['optimus' => 'id']]);
+
+        $this->supports($configuration)->shouldReturn(true);
+        $this->apply($request, $configuration)->shouldReturn(true);
+        expect($request->attributes->get('id'))->toBe(20);
     }
 
     public function it_does_not_decode_when_there_is_no_optimus()
