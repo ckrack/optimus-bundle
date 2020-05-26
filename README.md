@@ -86,7 +86,6 @@ options:
 ```php
 /**
  * @Route("/users/{user}")
- *
  * @ParamConverter("user", options={"optimus" = "user"})
  */
 public function getAction(int $user)
@@ -110,7 +109,8 @@ Based on the example above:
 
 ```php
 /**
- * @Route("/users/{optimus}")
+ * @Route("/users/{user}")
+ * @ParamConverter("user")
  */
 public function getAction(User $user)
 {
