@@ -1,0 +1,29 @@
+name: QA
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: PHP ${{ matrix.php }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ 7.4 ]
+        os: [ ubuntu-latest ]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: ${{ matrix.php }}
+
+    - name: Install composer dependencies
+      run: composer install --no-interaction --prefer-dist --no-progress
+
+    - name: PHP spec
+      uses: php-actions/phpspec@master
+      with:
+        config: phpspec.yml.dist
