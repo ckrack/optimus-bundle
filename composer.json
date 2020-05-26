@@ -25,7 +25,7 @@
   "require": {
     "php": ">=7.1",
     "jenssegers/optimus": "^1.1",
-    "sensio/framework-extra-bundle": "^5.1",
+    "sensio/framework-extra-bundle": "~3.0",
     "symfony/http-kernel": "^4.0 || ^5.0"
   },
   "require-dev": {
@@ -33,11 +33,6 @@
     "phpspec/phpspec": "^6.1",
     "roave/security-advisories": "dev-master",
     "twig/twig": "^2.7"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.1-dev"
-    }
   },
   "suggest": {
     "twig/twig": "Allows to use optimus in Twig template engine"
