@@ -1,0 +1,29 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/ergebnis/phpstan-rules/rules.neon
+    - vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    reportUnmatchedIgnoredErrors: true
+    ergebnis:
+        classesAllowedToBeExtended:
+            - Symfony\Component\HttpKernel\Bundle\Bundle
+            - Symfony\Component\HttpKernel\DependencyInjection\Extension
+            - Twig\Extension\AbstractExtension
+            - PhpSpec\ObjectBehavior
+    ignoreErrors:
+        # We actually configure a container here
+        -
+            message: '#.*has a parameter \$container with a type declaration of .*ContainerBuilder.*#m'
+            path: src/DependencyInjection/CkrackOptimusExtension.php
+
+        # The DependencyInjection returns are very complex to deal with
+        -
+            message: '#Cannot call method.* on .*NodeParentInterface\|null.*#'
+            path: src/DependencyInjection/Configuration.php

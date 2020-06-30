@@ -6,6 +6,6 @@ namespace Ckrack\OptimusBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class CkrackOptimusBundle extends Bundle
+final class CkrackOptimusBundle extends Bundle
 {
 }

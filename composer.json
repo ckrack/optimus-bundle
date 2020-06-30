@@ -23,15 +23,21 @@
     }
   },
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "jenssegers/optimus": "^1.1",
     "sensio/framework-extra-bundle": "~3.0",
     "symfony/http-kernel": "^4.0 || ^5.0"
   },
   "require-dev": {
     "bossa/phpspec2-expect": "^3.0",
-    "phpspec/phpspec": "^6.1",
+    "ergebnis/phpstan-rules": "^0.15.0",
+    "friendsofphp/php-cs-fixer": "^2.16.3",
+    "phpspec/phpspec": "^4.3 || ^5.1 || ^6.1",
+    "phpstan/phpstan-strict-rules": "^0.12.2",
+    "phpstan/phpstan": "^0.12.31",
+    "rector/rector": "^0.7.37",
     "roave/security-advisories": "dev-master",
+    "thecodingmachine/phpstan-strict-rules": "^0.12.0",
     "twig/twig": "^2.7"
   },
   "suggest": {
@@ -42,5 +48,16 @@
       "*": "dist"
     },
     "sort-packages": true
+  },
+  "scripts": {
+    "lint:rector": "vendor/bin/rector process --dry-run",
+    "lint:php-cs-fixer": "vendor/bin/php-cs-fixer fix -v --dry-run",
+    "lint:phpstan": "vendor/bin/phpstan analyse --ansi --memory-limit=0",
+    "lint": [
+      "composer lint:rector",
+      "composer lint:php-cs-fixer",
+      "composer lint:phpstan"
+    ],
+    "test": "vendor/bin/phpspec run --ansi"
   }
 }

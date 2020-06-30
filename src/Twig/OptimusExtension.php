@@ -8,7 +8,7 @@ use Jenssegers\Optimus\Optimus;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-class OptimusExtension extends AbstractExtension
+final class OptimusExtension extends AbstractExtension
 {
     /**
      * @var Optimus
@@ -27,7 +27,7 @@ class OptimusExtension extends AbstractExtension
         ];
     }
 
-    public function optimusEncode($number): int
+    public function optimusEncode(int $number): int
     {
         return $this->optimus->encode($number);
     }
