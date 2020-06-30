@@ -68,7 +68,7 @@ final class OptimusParamConverter implements ParamConverterInterface
 
     private function getIdentifier(Request $request, array $options): string
     {
-        if ($options[self::DEFAULT_IDENTIFIER] && \is_string($options[self::DEFAULT_IDENTIFIER])) {
+        if (\array_key_exists(self::DEFAULT_IDENTIFIER, $options) && \is_string($options[self::DEFAULT_IDENTIFIER])) {
             return $options[self::DEFAULT_IDENTIFIER];
         }
 
@@ -77,15 +77,11 @@ final class OptimusParamConverter implements ParamConverterInterface
 
     private function hasIdentifier(Request $request, array $options): bool
     {
-        if ($options[self::DEFAULT_IDENTIFIER]) {
+        if (\array_key_exists(self::DEFAULT_IDENTIFIER, $options) && \is_string($options[self::DEFAULT_IDENTIFIER])) {
             return true;
         }
 
-        if ($request->attributes->has(self::DEFAULT_IDENTIFIER)) {
-            return true;
-        }
-
-        return false;
+        return $request->attributes->has(self::DEFAULT_IDENTIFIER);
     }
 
     private function removeOptimusOption(ParamConverter $configuration): void
