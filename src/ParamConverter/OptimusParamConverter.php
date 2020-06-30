@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class OptimusParamConverter implements ParamConverterInterface
+final class OptimusParamConverter implements ParamConverterInterface
 {
     /**
      * @var Optimus
@@ -19,7 +19,12 @@ class OptimusParamConverter implements ParamConverterInterface
     /**
      * @var bool
      */
-    private $passthrough;
+    private $passthrough = false;
+
+    /**
+     * @var string
+     */
+    private const DEFAULT_IDENTIFIER = 'optimus';
 
     public function __construct(Optimus $optimus, bool $passthrough)
     {
@@ -43,49 +48,52 @@ class OptimusParamConverter implements ParamConverterInterface
 
     private function setOptimus(Request $request, ParamConverter $configuration): void
     {
-        $name = $configuration->getName();
+        if (!$this->hasIdentifier($request, array_replace([self::DEFAULT_IDENTIFIER => null], $configuration->getOptions()))) {
+            return;
+        }
 
         $identifier = $this->getIdentifier(
             $request,
-            array_replace(['optimus' => null], $configuration->getOptions()),
-            (string) $configuration->getName()
+            array_replace([self::DEFAULT_IDENTIFIER => null], $configuration->getOptions())
         );
 
-        if (!$identifier) {
-            return;
+        $name = $configuration->getName();
+        if ($name == null && $identifier == self::DEFAULT_IDENTIFIER) {
+            $name = self::DEFAULT_IDENTIFIER;
         }
 
-        if ($name == null && $identifier == 'optimus') {
-            $name = 'optimus';
-        }
-
-        try {
-            $optimus = $this->optimus->decode((int) $request->attributes->get($identifier));
-            $request->attributes->set($name, $optimus);
-        } catch (\Throwable $th) {
-            return;
-        }
+        $optimus = $this->optimus->decode((int) $request->attributes->get($identifier));
+        $request->attributes->set($name, $optimus);
     }
 
-    private function getIdentifier(Request $request, $options, string $name): ?string
+    private function getIdentifier(Request $request, array $options): string
     {
-        if ($options['optimus'] && !\is_array($options['optimus'])) {
-            return $options['optimus'];
+        if ($options[self::DEFAULT_IDENTIFIER] && \is_string($options[self::DEFAULT_IDENTIFIER])) {
+            return $options[self::DEFAULT_IDENTIFIER];
         }
 
-        if ($request->attributes->has('optimus')) {
-            return 'optimus';
+        return self::DEFAULT_IDENTIFIER;
+    }
+
+    private function hasIdentifier(Request $request, array $options): bool
+    {
+        if ($options[self::DEFAULT_IDENTIFIER]) {
+            return true;
         }
 
-        return null;
+        if ($request->attributes->has(self::DEFAULT_IDENTIFIER)) {
+            return true;
+        }
+
+        return false;
     }
 
     private function removeOptimusOption(ParamConverter $configuration): void
     {
         $options = $configuration->getOptions();
 
-        if (isset($options['optimus'])) {
-            unset($options['optimus']);
+        if (\array_key_exists(self::DEFAULT_IDENTIFIER, $options)) {
+            unset($options[self::DEFAULT_IDENTIFIER]);
             $configuration->setOptions($options);
         }
     }

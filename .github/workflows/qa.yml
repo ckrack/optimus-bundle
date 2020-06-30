@@ -27,3 +27,9 @@ jobs:
       uses: php-actions/phpspec@master
       with:
         config: phpspec.yml.dist
+
+    - name: Lint code
+      run: vendor/bin/php-cs-fixer fix -v --dry-run && vendor/bin/rector process --dry-run
+
+    - name: Static analysis
+      run: vendor/bin/phpstan analyse --ansi --memory-limit=0

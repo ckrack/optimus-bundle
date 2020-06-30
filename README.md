@@ -39,18 +39,14 @@ The configuration (`config/packages/ckrack_optimus.yaml`) looks as follows:
 
 ```yaml
 ckrack_optimus:
+    # Set options, as documented at https://github.com/jenssegers/optimus#usage
+    prime: "%env(int:OPTIMUS_PRIME)%"
+    inverse: "%env(int:OPTIMUS_INVERSE)%"
+    random: "%env(int:OPTIMUS_RANDOM)%"
 
-    # Large prime number lower than 2147483647
-    prime: %env(int:OPTIMUS_PRIME)%
-
-    # The inverse prime so that (PRIME * INVERSE) & MAXID == 1
-    inverse: %env(int:OPTIMUS_INVERSE)%
-
-    # A large random integer lower than 2147483647
-    random: %env(int:OPTIMUS_RANDOM)%
-
-    # if set to true, param converter will continue with the next available
+    # if set to true, param converter will continue with the next available param converters
     passthrough: true
+
 ```
 
 To generate the env variables, we can use optimus' `spark` command.

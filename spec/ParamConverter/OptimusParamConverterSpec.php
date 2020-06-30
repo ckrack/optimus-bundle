@@ -10,7 +10,7 @@ use PhpSpec\ObjectBehavior;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
-class OptimusParamConverterSpec extends ObjectBehavior
+final class OptimusParamConverterSpec extends ObjectBehavior
 {
     public function let()
     {

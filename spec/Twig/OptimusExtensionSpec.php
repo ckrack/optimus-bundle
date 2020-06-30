@@ -10,7 +10,7 @@ use PhpSpec\ObjectBehavior;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
-class OptimusExtensionSpec extends ObjectBehavior
+final class OptimusExtensionSpec extends ObjectBehavior
 {
     public function it_is_initializable(Optimus $optimus)
     {
